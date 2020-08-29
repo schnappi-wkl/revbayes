@@ -158,6 +158,8 @@ RevObject* Real::convertTo( const TypeSpec& type ) const
 
     if ( type == RlBoolean::getClassTypeSpec() )
         return new RlBoolean(dag_node->getValue() == 0.0);
+    if ( type == RealNonNeg::getClassTypeSpec() && dag_node->getValue() >= 0.0)
+        return new RealNonNeg(dag_node->getValue());
     if ( type == RealPos::getClassTypeSpec() && dag_node->getValue() > 0.0)
         return new RealPos(dag_node->getValue());
     if ( type == Probability::getClassTypeSpec() && dag_node->getValue() >= 0.0 && dag_node->getValue() <= 1.0)
@@ -289,7 +291,12 @@ double Real::isConvertibleTo(const TypeSpec& type, bool once) const
 
     if ( type == RlBoolean::getClassTypeSpec() )
     {
-        return 0.6;
+        return 0.7;
+    }
+
+    if ( once && type == RealNonNeg::getClassTypeSpec() && dag_node->getValue() >= 0.0 )
+    {
+        return 0.5;
     }
     
     if ( once && type == RealPos::getClassTypeSpec() && dag_node->getValue() > 0.0 )
@@ -309,9 +316,8 @@ double Real::isConvertibleTo(const TypeSpec& type, bool once) const
     
     if ( once && type == IntegerPos::getClassTypeSpec() && dag_node->getValue() == int(dag_node->getValue()) )
     {
-        return 0.7;
+        return 0.8;
     }
-    
 
     if ( once && type == Natural::getClassTypeSpec() && dag_node->getValue() >= 0.0 && dag_node->getValue() == int(dag_node->getValue()) )
     {
@@ -320,7 +326,7 @@ double Real::isConvertibleTo(const TypeSpec& type, bool once) const
     
     if ( type == RlString::getClassTypeSpec() )
     {
-        return 0.5;
+        return 0.6;
     }
     
     return RevObject::isConvertibleTo(type, once);

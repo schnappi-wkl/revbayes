@@ -18,7 +18,7 @@
 
 #include <ostream>
 
-#include "RealPos.h"
+#include "RealNonNeg.h"
 
 namespace RevBayesCore { template <class valueType> class TypedDagNode; }
 
@@ -26,7 +26,7 @@ namespace RevLanguage {
 class RevObject;
 class TypeSpec;
 
-    class Probability : public RealPos {
+    class Probability : public RealNonNeg {
     
     public:
         Probability(void);                                                                                      //!< Default constructor

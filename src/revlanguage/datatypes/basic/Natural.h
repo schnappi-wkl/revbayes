@@ -10,7 +10,7 @@
 
 namespace RevLanguage {
 
-    class RealPos;
+    class RealNonNeg;
 
     /**
      * Primitive type for Natural numbers (including 0).
@@ -30,13 +30,13 @@ namespace RevLanguage {
         // Basic operator functions
         RevObject*                  add(const RevObject &rhs) const;                                        //!< Addition operator used for example in '+=' statements
         Natural*                    add(const Natural &rhs) const;                                          //!< Addition operator used for example in '+=' statements
-        RealPos*                    add(const RealPos &rhs) const;                                          //!< Addition operator used for example in '+=' statements
+        RealNonNeg*                 add(const RealNonNeg &rhs) const;                                       //!< Addition operator used for example in '+=' statements
         RevObject*                  divide(const RevObject &rhs) const;                                     //!< Division operator used for example in '/=' statements
-        RealPos*                    divide(const Natural &rhs) const;                                       //!< Division operator used for example in '/=' statements
-        RealPos*                    divide(const RealPos &rhs) const;                                       //!< Division operator used for example in '/=' statements
+        RealNonNeg*                 divide(const Natural &rhs) const;                                       //!< Division operator used for example in '/=' statements
+        RealNonNeg*                 divide(const RealNonNeg &rhs) const;                                    //!< Division operator used for example in '/=' statements
         RevObject*                  multiply(const RevObject &rhs) const;                                   //!< Multiplication operator used for example in '*=' statements
         Natural*                    multiply(const Natural &rhs) const;                                     //!< Multiplication operator used for example in '*=' statements
-        RealPos*                    multiply(const RealPos &rhs) const;                                     //!< Multiplication operator used for example in '*=' statements
+        RealNonNeg*                 multiply(const RealNonNeg &rhs) const;                                  //!< Multiplication operator used for example in '*=' statements
 
         // Basic utility functions
         Natural*                    clone(void) const;                                                      //!< Clone object

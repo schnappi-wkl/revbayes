@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "RealPos.h"
+#include "RealNonNeg.h"
 #include "RbException.h"
 #include "ReferenceFunction.h"
 #include "StringUtilities.h"
@@ -14,14 +14,14 @@ namespace RevLanguage { class RevObject; }
 using namespace RevLanguage;
 
 /** Default constructor */
-Probability::Probability( void ) : RealPos( 1.0 )
+Probability::Probability( void ) : RealNonNeg( 1.0 )
 {
 
 }
 
 
 /** Construct from double */
-Probability::Probability( double x ) : RealPos( x )
+Probability::Probability( double x ) : RealNonNeg( x )
 {
     
     if ( x < 0.0 || x > 1.0)
@@ -33,7 +33,7 @@ Probability::Probability( double x ) : RealPos( x )
 
 
 /** Construct from double */
-Probability::Probability( RevBayesCore::TypedDagNode<double> *x ) : RealPos( x )
+Probability::Probability( RevBayesCore::TypedDagNode<double> *x ) : RealNonNeg( x )
 {
     
 }
@@ -76,12 +76,12 @@ void Probability::constructInternalObject( void )
 RevObject* Probability::convertTo( const TypeSpec& type ) const
 {
     
-    if ( type == RealPos::getClassTypeSpec() )
+    if ( type == RealNonNeg::getClassTypeSpec() )
     {
-        return new RealPos(dag_node->getValue());
+        return new RealNonNeg(dag_node->getValue());
     }
     
-    return RealPos::convertTo( type );
+    return RealNonNeg::convertTo( type );
 }
 
 
@@ -98,7 +98,7 @@ const std::string& Probability::getClassType(void)
 const TypeSpec& Probability::getClassTypeSpec(void)
 {
     
-    static TypeSpec rev_type_spec = TypeSpec( getClassType(), new TypeSpec( RealPos::getClassTypeSpec() ) );
+    static TypeSpec rev_type_spec = TypeSpec( getClassType(), new TypeSpec( RealNonNeg::getClassTypeSpec() ) );
     
 	return rev_type_spec; 
 }
@@ -150,13 +150,13 @@ const TypeSpec& Probability::getTypeSpec( void ) const
 double Probability::isConvertibleTo( const TypeSpec& type, bool once ) const
 {
     
-    if ( type == RealPos::getClassTypeSpec() )
+    if ( type == RealNonNeg::getClassTypeSpec() )
     {
         return 0.1;
     }
     else
     {
-        double tmp = RealPos::isConvertibleTo(type, once);
+        double tmp = RealNonNeg::isConvertibleTo(type, once);
         return ( (tmp == -1.0) ? -1.0 : (tmp+0.1));
     }
 }

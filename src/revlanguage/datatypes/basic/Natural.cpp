@@ -5,7 +5,7 @@
 #include "Natural.h"
 #include "Integer.h"
 #include "Probability.h"
-#include "RealPos.h"
+#include "RealNonNeg.h"
 #include "Real.h"
 #include "RbException.h"
 #include "RlDiscreteCharacterState.h"
@@ -58,9 +58,9 @@ RevObject* Natural::add( const RevObject& rhs ) const
         return add( static_cast<const Natural&>( rhs ) );
     }
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
     {
-        return add( static_cast<const RealPos&>( rhs ) );
+        return add( static_cast<const RealNonNeg&>( rhs ) );
     }
     
     return Integer::add( rhs );
@@ -92,10 +92,10 @@ Natural* Natural::add(const RevLanguage::Natural &rhs) const
  *
  * \return              A new object holding the sum.
  */
-RealPos* Natural::add(const RevLanguage::RealPos &rhs) const
+RealNonNeg* Natural::add(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() + rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() + rhs.getValue() );
     
     return n;
 }
@@ -118,32 +118,9 @@ Natural* Natural::clone( void ) const
 RevObject* Natural::convertTo( const TypeSpec& type ) const
 {
 
-    if ( type == RlBoolean::getClassTypeSpec() )
+    if ( type == Integer::getClassTypeSpec() )
     {
-        return new RlBoolean( dag_node->getValue() == 0 );
-    }
-    
-    if ( type == Real::getClassTypeSpec() )
-    {
-        return new Real( dag_node->getValue() );
-    }
-    
-    if ( type == RealPos::getClassTypeSpec() )
-    {
-        return new RealPos( dag_node->getValue() );
-    }
-    
-    if ( type == Probability::getClassTypeSpec() )
-    {
-        return new Probability( dag_node->getValue() );
-    }
-
-    if ( type == RlString::getClassTypeSpec() )
-    {
-
-        std::ostringstream o;
-        printValue( o, true );
-        return new RlString( o.str() );
+        return new Integer( dag_node->getValue() );
     }
     
     if ( type == DiscreteCharacterState::getClassTypeSpec() )
@@ -174,9 +151,9 @@ RevObject* Natural::divide( const RevObject& rhs ) const
         return divide( static_cast<const Natural&>( rhs ) );
     }
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
     {
-        return divide( static_cast<const RealPos&>( rhs ) );
+        return divide( static_cast<const RealNonNeg&>( rhs ) );
     }
     
     return Integer::divide( rhs );
@@ -191,10 +168,10 @@ RevObject* Natural::divide( const RevObject& rhs ) const
  *
  * \return              A new object holding the ratio.
  */
-RealPos* Natural::divide(const RevLanguage::Natural &rhs) const
+RealNonNeg* Natural::divide(const RevLanguage::Natural &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() / double( rhs.getValue() ) );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() / double( rhs.getValue() ) );
     
     return n;
 }
@@ -208,10 +185,10 @@ RealPos* Natural::divide(const RevLanguage::Natural &rhs) const
  *
  * \return              A new object holding the ratio.
  */
-RealPos* Natural::divide(const RevLanguage::RealPos &rhs) const
+RealNonNeg* Natural::divide(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() / rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() / rhs.getValue() );
     
     return n;
 }
@@ -250,29 +227,9 @@ const TypeSpec& Natural::getTypeSpec( void ) const
 double Natural::isConvertibleTo( const TypeSpec& type, bool once ) const
 {
 
-    if ( type == RlBoolean::getClassTypeSpec() )
-    {
-        return 0.5;
-    }
-    
-    if ( type == Real::getClassTypeSpec() )
-    {
-        return 0.3;
-    }
-    
-    if ( type == RealPos::getClassTypeSpec() )
+    if ( type == Integer::getClassTypeSpec() )
     {
         return 0.2;
-    }
-    
-    if ( once == true && type == Probability::getClassTypeSpec() && dag_node->getValue() <= 1 )
-    {
-        return 0.1;
-    }
-    
-    if ( type == RlString::getClassTypeSpec() )
-    {
-        return 0.6;
     }
     
     if ( type == DiscreteCharacterState::getClassTypeSpec() )
@@ -298,8 +255,8 @@ RevObject* Natural::multiply( const RevObject& rhs ) const
     if ( rhs.getTypeSpec().isDerivedOf( Natural::getClassTypeSpec() ) )
         return multiply( static_cast<const Natural&>( rhs ) );
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
-        return multiply( static_cast<const RealPos&>( rhs ) );
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
+        return multiply( static_cast<const RealNonNeg&>( rhs ) );
     
     return Integer::multiply( rhs );
 }
@@ -330,10 +287,10 @@ Natural* Natural::multiply(const RevLanguage::Natural &rhs) const
  *
  * \return              A new object holding the product.
  */
-RealPos* Natural::multiply(const RevLanguage::RealPos &rhs) const
+RealNonNeg* Natural::multiply(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() * rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() * rhs.getValue() );
     
     return n;
 }

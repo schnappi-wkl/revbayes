@@ -1,55 +1,55 @@
 #include <sstream>
 #include <string>
 
-#include "IntegerPos.h"
+#include "Natural.h"
 #include "Probability.h"
-#include "RealPos.h"
+#include "RealNonNeg.h"
 #include "RbException.h"
 #include "TypeSpec.h"
-#include "RealNonNeg.h"
+#include "Real.h"
 #include "RevObject.h"
 #include "TypedDagNode.h"
 
 using namespace RevLanguage;
     
 /** Default constructor */
-RealPos::RealPos( void ) : RealNonNeg( 1.0 )
+RealNonNeg::RealNonNeg( void ) : Real( 1.0 )
 {
 
 }
 
 
 /** Construct from double */
-RealPos::RealPos( RevBayesCore::TypedDagNode<double> *x ) : RealNonNeg( x )
+RealNonNeg::RealNonNeg( RevBayesCore::TypedDagNode<double> *x ) : Real( x )
 {
     
-    if ( x->getValue() <= 0.0 )
+    if ( x->getValue() < 0.0 )
     {
-        throw RbException( "Nonpositive value for " + getClassType() );
+        throw RbException( "Negative value for " + getClassType() );
     }
     
 }
 
 
 /** Construct from double */
-RealPos::RealPos( double x ) : RealNonNeg( x )
+RealNonNeg::RealNonNeg( double x ) : Real( x )
 {
 
-    if ( x <= 0.0 )
+    if ( x < 0.0 )
     {
-        throw RbException( "Nonpositive value for " + getClassType() );
+        throw RbException( "Negative value for " + getClassType() );
     }
     
 }
 
 
 /** Construct from int */
-RealPos::RealPos( long x ) : RealNonNeg( double(x) )
+RealNonNeg::RealNonNeg( long x ) : Real( double(x) )
 {
 
-    if ( x <= 0 )
+    if ( x < 0 )
     {
-        throw RbException( "Nonpositive value for " + getClassType() );
+        throw RbException( "Negative value for " + getClassType() );
     }
     
 }
@@ -63,20 +63,20 @@ RealPos::RealPos( long x ) : RealNonNeg( double(x) )
  *
  * \return              A new object holding the sum.
  */
-RevObject* RealPos::add( const RevObject& rhs ) const 
+RevObject* RealNonNeg::add( const RevObject& rhs ) const
 {
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
     {
-        return add( static_cast<const RealPos&>( rhs ) );
+        return add( static_cast<const RealNonNeg&>( rhs ) );
     }
     
-    if ( rhs.getTypeSpec().isDerivedOf( IntegerPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( Natural::getClassTypeSpec() ) )
     {
-        return add( static_cast<const IntegerPos&>( rhs ) );
+        return add( static_cast<const Natural&>( rhs ) );
     }
     
-    return RealNonNeg::add( rhs );
+    return Real::add( rhs );
 }
 
 
@@ -88,10 +88,10 @@ RevObject* RealPos::add( const RevObject& rhs ) const
  *
  * \return              A new object holding the sum.
  */
-RealPos* RealPos::add(const RevLanguage::IntegerPos &rhs) const
+RealNonNeg* RealNonNeg::add(const RevLanguage::Natural &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() + rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() + rhs.getValue() );
     
     return n;
 }
@@ -105,10 +105,10 @@ RealPos* RealPos::add(const RevLanguage::IntegerPos &rhs) const
  *
  * \return              A new object holding the sum.
  */
-RealPos* RealPos::add(const RevLanguage::RealPos &rhs) const
+RealNonNeg* RealNonNeg::add(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() + rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() + rhs.getValue() );
     
     return n;
 }
@@ -120,21 +120,21 @@ RealPos* RealPos::add(const RevLanguage::RealPos &rhs) const
  *
  * \return A new copy of the process.
  */
-RealPos* RealPos::clone( void ) const
+RealNonNeg* RealNonNeg::clone( void ) const
 {
 
-	return new RealPos( *this );
+	return new RealNonNeg( *this );
 }
 
-RevObject* RealPos::convertTo( const TypeSpec& type ) const
+RevObject* RealNonNeg::convertTo( const TypeSpec& type ) const
 {
     
-    if ( type == RealNonNeg::getClassTypeSpec() )
+    if ( type == Real::getClassTypeSpec() )
     {
-        return new RealNonNeg(dag_node->getValue());
+        return new Real(dag_node->getValue());
     }
     
-    return RealNonNeg::convertTo( type );
+    return Real::convertTo( type );
 }
 
 
@@ -146,20 +146,20 @@ RevObject* RealPos::convertTo( const TypeSpec& type ) const
  *
  * \return              A new object holding the ratio.
  */
-RevObject* RealPos::divide( const RevObject& rhs ) const 
+RevObject* RealNonNeg::divide( const RevObject& rhs ) const
 {
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
     {
-        return divide( static_cast<const RealPos&>( rhs ) );
+        return divide( static_cast<const RealNonNeg&>( rhs ) );
     }
     
-    if ( rhs.getTypeSpec().isDerivedOf( IntegerPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( Natural::getClassTypeSpec() ) )
     {
-        return divide( static_cast<const IntegerPos&>( rhs ) );
+        return divide( static_cast<const Natural&>( rhs ) );
     }
     
-    return RealNonNeg::divide( rhs );
+    return Real::divide( rhs );
 }
 
 
@@ -171,10 +171,10 @@ RevObject* RealPos::divide( const RevObject& rhs ) const
  *
  * \return              A new object holding the ratio.
  */
-RealPos* RealPos::divide(const RevLanguage::IntegerPos &rhs) const
+RealNonNeg* RealNonNeg::divide(const RevLanguage::Natural &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() / rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() / rhs.getValue() );
     
     return n;
 }
@@ -188,35 +188,35 @@ RealPos* RealPos::divide(const RevLanguage::IntegerPos &rhs) const
  *
  * \return              A new object holding the ratio.
  */
-RealPos* RealPos::divide(const RevLanguage::RealPos &rhs) const
+RealNonNeg* RealNonNeg::divide(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() / rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() / rhs.getValue() );
     
     return n;
 }
 
 
 /** Get Rev type of object */
-const std::string& RealPos::getClassType(void)
+const std::string& RealNonNeg::getClassType(void)
 {
     
-    static std::string rev_type = "RealPos";
+    static std::string rev_type = "RealNonNeg";
     
 	return rev_type; 
 }
 
 /** Get class type spec describing type of object */
-const TypeSpec& RealPos::getClassTypeSpec(void) { 
+const TypeSpec& RealNonNeg::getClassTypeSpec(void) {
     
-    static TypeSpec rev_type_spec = TypeSpec( getClassType(), new TypeSpec( RealNonNeg::getClassTypeSpec() ) );
+    static TypeSpec rev_type_spec = TypeSpec( getClassType(), new TypeSpec( Real::getClassTypeSpec() ) );
     
 	return rev_type_spec; 
 }
 
 
 /** Get type spec */
-const TypeSpec& RealPos::getTypeSpec( void ) const
+const TypeSpec& RealNonNeg::getTypeSpec( void ) const
 {
     
     static TypeSpec type_spec = getClassTypeSpec();
@@ -226,15 +226,15 @@ const TypeSpec& RealPos::getTypeSpec( void ) const
 
 
 /** Is convertible to type? */
-double RealPos::isConvertibleTo(const TypeSpec& type, bool once) const
+double RealNonNeg::isConvertibleTo(const TypeSpec& type, bool once) const
 {
     
-    if ( type == RealNonNeg::getClassTypeSpec() )
+    if ( type == Real::getClassTypeSpec() )
     {
         return 0.2;
     }
     
-    double tmp = RealNonNeg::isConvertibleTo(type, once);
+    double tmp = Real::isConvertibleTo(type, once);
     return ( (tmp == -1.0) ? -1.0 : (tmp+0.2));
 }
 
@@ -247,20 +247,20 @@ double RealPos::isConvertibleTo(const TypeSpec& type, bool once) const
  *
  * \return              A new object holding the product.
  */
-RevObject* RealPos::multiply( const RevObject& rhs ) const 
+RevObject* RealNonNeg::multiply( const RevObject& rhs ) const
 {
     
-    if ( rhs.getTypeSpec().isDerivedOf( RealPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( RealNonNeg::getClassTypeSpec() ) )
     {
-        return multiply( static_cast<const RealPos&>( rhs ) );
+        return multiply( static_cast<const RealNonNeg&>( rhs ) );
     }
     
-    if ( rhs.getTypeSpec().isDerivedOf( IntegerPos::getClassTypeSpec() ) )
+    if ( rhs.getTypeSpec().isDerivedOf( Natural::getClassTypeSpec() ) )
     {
-        return multiply( static_cast<const IntegerPos&>( rhs ) );
+        return multiply( static_cast<const Natural&>( rhs ) );
     }
     
-    return RealNonNeg::multiply( rhs );
+    return Real::multiply( rhs );
 }
 
 
@@ -272,10 +272,10 @@ RevObject* RealPos::multiply( const RevObject& rhs ) const
  *
  * \return              A new object holding the product.
  */
-RealPos* RealPos::multiply(const RevLanguage::IntegerPos &rhs) const
+RealNonNeg* RealNonNeg::multiply(const RevLanguage::Natural &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() * rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() * rhs.getValue() );
     
     return n;
 }
@@ -289,10 +289,10 @@ RealPos* RealPos::multiply(const RevLanguage::IntegerPos &rhs) const
  *
  * \return              A new object holding the product.
  */
-RealPos* RealPos::multiply(const RevLanguage::RealPos &rhs) const
+RealNonNeg* RealNonNeg::multiply(const RevLanguage::RealNonNeg &rhs) const
 {
     
-    RealPos *n = new RealPos( dag_node->getValue() * rhs.getValue() );
+    RealNonNeg *n = new RealNonNeg( dag_node->getValue() * rhs.getValue() );
     
     return n;
 }

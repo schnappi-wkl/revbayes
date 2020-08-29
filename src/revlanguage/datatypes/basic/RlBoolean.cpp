@@ -7,7 +7,7 @@
 #include "Natural.h"
 #include "RlBoolean.h"
 #include "Real.h"
-#include "RealPos.h"
+#include "RealNonNeg.h"
 #include "TypeSpec.h"
 #include "DagNode.h"
 #include "DeterministicNode.h"
@@ -99,16 +99,16 @@ RevObject* RlBoolean::convertTo(const TypeSpec& type) const
         }
         
     }
-    else if (type == RealPos::getClassTypeSpec())
+    else if (type == RealNonNeg::getClassTypeSpec())
     {
         
         if ( dag_node->getValue() == true )
         {
-            return new RealPos(1.0);
+            return new RealNonNeg(1.0);
         }
         else
         {
-            return new RealPos(0.0);
+            return new RealNonNeg(0.0);
         }
         
     }
@@ -159,7 +159,7 @@ double RlBoolean::isConvertibleTo(const TypeSpec& type, bool once) const
     {
         return 0.3;
     }
-    else if ( type == RealPos::getClassTypeSpec() )
+    else if ( type == RealNonNeg::getClassTypeSpec() )
     {
         return 0.2;
     }

@@ -16,16 +16,16 @@
 #ifndef RealPos_H
 #define RealPos_H
 
-#include "Real.h"
+#include "RealNonNeg.h"
 
 #include <ostream>
 #include <string>
 
 namespace RevLanguage {
 
-    class Natural;
+    class IntegerPos;
     
-    class RealPos : public Real {
+    class RealPos : public RealNonNeg {
 
         public:
         RealPos(void);                                                              //!< Default constructor
@@ -35,13 +35,13 @@ namespace RevLanguage {
 
         // Basic operator functions
         virtual RevObject*              add(const RevObject &rhs) const;            //!< Addition operator used for example in '+=' statements
-        RealPos*                        add(const Natural &rhs) const;              //!< Addition operator used for example in '+=' statements
+        RealPos*                        add(const IntegerPos &rhs) const;           //!< Addition operator used for example in '+=' statements
         RealPos*                        add(const RealPos &rhs) const;              //!< Addition operator used for example in '+=' statements
         virtual RevObject*              divide(const RevObject &rhs) const;         //!< Division operator used for example in '/=' statements
-        RealPos*                        divide(const Natural &rhs) const;           //!< Division operator used for example in '/=' statements
+        RealPos*                        divide(const IntegerPos &rhs) const;        //!< Division operator used for example in '/=' statements
         RealPos*                        divide(const RealPos &rhs) const;           //!< Division operator used for example in '/=' statements
         virtual RevObject*              multiply(const RevObject &rhs) const;       //!< Multiplication operator used for example in '*=' statements
-        RealPos*                        multiply(const Natural &rhs) const;         //!< Multiplication operator used for example in '*=' statements
+        RealPos*                        multiply(const IntegerPos &rhs) const;      //!< Multiplication operator used for example in '*=' statements
         RealPos*                        multiply(const RealPos &rhs) const;         //!< Multiplication operator used for example in '*=' statements
 
         // Basic utility functions

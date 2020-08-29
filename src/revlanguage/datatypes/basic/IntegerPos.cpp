@@ -36,7 +36,7 @@ IntegerPos::IntegerPos( long x ) : Natural( x )
 
     if ( x < 1 )
     {
-        throw RbException( "Negative or zero value for " + getClassType() );
+        throw RbException( "Non-positive value for " + getClassType() );
     }
     
 }
@@ -249,38 +249,12 @@ const TypeSpec& IntegerPos::getTypeSpec( void ) const
 /** Is convertible to type? */
 double IntegerPos::isConvertibleTo( const TypeSpec& type, bool once ) const
 {
-
-    if ( type == RlBoolean::getClassTypeSpec() )
-    {
-        return 0.5;
-    }
-    
-    if ( type == Real::getClassTypeSpec() )
-    {
-        return 0.3;
-    }
-    
     if ( type == RealPos::getClassTypeSpec() )
     {
         return 0.2;
     }
     
-    if ( once == true && type == Probability::getClassTypeSpec() && dag_node->getValue() <= 1 )
-    {
-        return 0.1;
-    }
-    
-    if ( type == RlString::getClassTypeSpec() )
-    {
-        return 0.6;
-    }
-    
-    if ( type == DiscreteCharacterState::getClassTypeSpec() )
-    {
-        return 0.7;
-    }
-    
-    return Integer::isConvertibleTo( type, once );
+    return Natural::isConvertibleTo( type, once );
 }
 
 

@@ -135,10 +135,16 @@ RevObject* Integer::convertTo( const TypeSpec& type ) const
         return new RlString( o.str() );
     }
 
+    if ( type == RealNonNeg::getClassTypeSpec() && dag_node->getValue() >= 0 )
+    {
+        return new RealNonNeg( double(dag_node->getValue()) );
+    }
+
     if ( type == RealPos::getClassTypeSpec() && dag_node->getValue() > 0 )
     {
         return new RealPos( double(dag_node->getValue()) );
     }
+
     if ( type == IntegerPos::getClassTypeSpec() && dag_node->getValue() > 0)
     {
         return new IntegerPos( dag_node->getValue() );
@@ -149,7 +155,7 @@ RevObject* Integer::convertTo( const TypeSpec& type ) const
         return new Natural( dag_node->getValue() );
     }
     
-    if ( type == Probability::getClassTypeSpec() )
+    if ( type == Probability::getClassTypeSpec() && dag_node->getValue() >= 0 && dag_node->getValue() <= 1)
     {
         return new Probability( dag_node->getValue() );
     }
@@ -292,10 +298,16 @@ double Integer::isConvertibleTo( const TypeSpec& type, bool once ) const
         return 0.5;
     }
     
-    if ( once && type == RealPos::getClassTypeSpec() && dag_node->getValue() >= 0 )
+    if ( once && type == RealNonNeg::getClassTypeSpec() && dag_node->getValue() >= 0 )
     {
         return 0.3;
     }
+
+    if ( once && type == RealPos::getClassTypeSpec() && dag_node->getValue() > 0 )
+    {
+        return 0.3;
+    }
+
     if ( once && type == IntegerPos::getClassTypeSpec() && dag_node->getValue() > 0 )
     {
         return 0.1;
