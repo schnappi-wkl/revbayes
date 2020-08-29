@@ -21,6 +21,7 @@
 #include "ModelObject.h"
 #include "RbException.h"
 #include "RbVector.h"
+#include "RealPos.h"
 #include "RevVariable.h"
 #include "RlFunction.h"
 #include "Simplex.h"

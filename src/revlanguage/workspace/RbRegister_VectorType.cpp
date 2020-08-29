@@ -105,7 +105,7 @@
 #include "RlTaxon.h"
 
 /// Types ///
-
+#include "RealPos.h"
 #include "Probability.h"
 
 /* These types are needed as template types for the moves */

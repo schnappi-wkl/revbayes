@@ -10,6 +10,7 @@
 #include "ModelVector.h"
 #include "Natural.h"
 #include "Probability.h"
+#include "RealPos.h"
 #include "RlUserInterface.h"
 #include "RlUtils.h"
 #include "Integer.h"
